@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road to JEE - Study Planner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .progress-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .progress-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .progress-item {
+            margin-bottom: 10px;
+            font-size: 0.95em;
+            color: #333;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .subject-section {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .class-subheading {
+            font-size: 1.3em;
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        thead {
+            background: #f0f0f0;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        .chapter-name {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .checkbox {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            background: white;
+            user-select: none;
+        }
+
+        .checkbox:hover {
+            background: #f0f0f0;
+            transform: scale(1.1);
+        }
+
+        .checkbox.checked {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .notes-field {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: inherit;
+            max-width: 200px;
+        }
+
+        .notes-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .tips-section {
+            background: #f0f7ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+
+        .tips-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .tips-section ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .tips-section li {
+            margin-bottom: 8px;
+            color: #333;
+            position: relative;
+        }
+
+        .tips-section li:before {
+            content: "✓";
+            position: absolute;
+            left: -15px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subject-section {
+                padding: 15px;
+            }
+
+            th, td {
+                padding: 8px;
+                font-size: 0.9em;
+            }
+
+            .checkbox {
+                width: 25px;
+                height: 25px;
+                font-size: 14px;
+            }
+
+            .notes-field {
+                max-width: 100px;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            opacity: 0.9;
+        }
+
+        .export-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-bottom: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .export-btn:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Road to JEE</h1>
+            <p class="subtitle">Complete Study Planner - Class 11 & 12</p>
+        </header>
+
+        <button class="export-btn" onclick="saveProgress()">💾 Save Progress</button>
+
+        <div class="stats" id="stats"></div>
+
+        <!-- PHYSICS SECTION -->
+        <div class="subject-section">
+            <h2 class="subject-title">🔬 PHYSICS</h2>
+
+            <h3 class="class-subheading">Class 11 Physics</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chapter</th>
+                        <th>Completed</th>
+                        <th>Revision 1</th>
+                        <th>Revision 2</th>
+                        <th>Revision 3</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="physics11"></tbody>
+            </table>
+
+            <h3 class="class-subheading">Class 12 Physics</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chapter</th>
+                        <th>Completed</th>
+                        <th>Revision 1</th>
+                        <th>Revision 2</th>
+                        <th>Revision 3</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="physics12"></tbody>
+            </table>
+        </div>
+
+        <!-- CHEMISTRY SECTION -->
+        <div class="subject-section">
+            <h2 class="subject-title">⚗️ CHEMISTRY</h2>
+
+            <h3 class="class-subheading">Class 11 Chemistry</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chapter</th>
+                        <th>Completed</th>
+                        <th>Revision 1</th>
+                        <th>Revision 2</th>
+                        <th>Revision 3</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="chemistry11"></tbody>
+            </table>
+
+            <h3 class="class-subheading">Class 12 Chemistry</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chapter</th>
+                        <th>Completed</th>
+                        <th>Revision 1</th>
+                        <th>Revision 2</th>
+                        <th>Revision 3</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="chemistry12"></tbody>
+            </table>
+        </div>
+
+        <!-- MATHEMATICS SECTION -->
+        <div class="subject-section">
+            <h2 class="subject-title">📐 MATHEMATICS</h2>
+
+            <h3 class="class-subheading">Class 11 Mathematics</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chapter</th>
+                        <th>Completed</th>
+                        <th>Revision 1</th>
+                        <th>Revision 2</th>
+                        <th>Revision 3</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="maths11"></tbody>
+            </table>
+
+            <h3 class="class-subheading">Class 12 Mathematics</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chapter</th>
+                        <th>Completed</th>
+                        <th>Revision 1</th>
+                        <th>Revision 2</th>
+                        <th>Revision 3</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="maths12"></tbody>
+            </table>
+        </div>
+
+        <div class="tips-section">
+            <h3>🎯 Study Tips</h3>
+            <ul>
+                <li>Focus on one subject at a time</li>
+                <li>Do multiple revisions for better retention</li>
+                <li>Practice previous year JEE papers after completing chapters</li>
+                <li>Maintain consistency in your study schedule</li>
+                <li>Mark difficult chapters for extra practice</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Good Luck with your JEE Preparation! 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        const chapters = {
+            physics11: [
+                "Physical World & Measurement",
+                "Kinematics",
+                "Laws of Motion",
+                "Work, Energy & Power",
+                "Motion of System of Particles & Rotational Motion",
+                "Gravitation",
+                "Properties of Bulk Matter - Elasticity",
+                "Properties of Bulk Matter - Fluids",
+                "Thermodynamics",
+                "Kinetic Theory of Gases",
+                "Oscillations",
+                "Waves",
+                "Electrostatics - Part 1",
+                "Electrostatics - Part 2",
+                "Current Electricity"
+            ],
+            physics12: [
+                "Magnetic Effects of Current & Magnetism - Part 1",
+                "Magnetic Effects of Current & Magnetism - Part 2",
+                "Electromagnetic Induction",
+                "Alternating Current",
+                "Electromagnetic Waves",
+                "Optics - Ray Optics & Optical Instruments",
+                "Optics - Wave Optics",
+                "Dual Nature of Matter & Radiation",
+                "Atoms",
+                "Nuclei",
+                "Semiconductor Electronics - Part 1",
+                "Semiconductor Electronics - Part 2",
+                "Communication Systems",
+                "Experimental Physics",
+                "Additional Topics"
+            ],
+            chemistry11: [
+                "Some Basic Concepts of Chemistry",
+                "Structure of Atom",
+                "Classification of Elements & Periodicity in Properties",
+                "Chemical Bonding & Molecular Structure",
+                "States of Matter",
+                "Thermodynamics",
+                "Equilibrium",
+                "Redox Reactions",
+                "Hydrogen",
+                "s-Block Elements",
+                "p-Block Elements - Part 1",
+                "Organic Chemistry - Some Basic Principles & Techniques",
+                "Hydrocarbons",
+                "Environmental Chemistry"
+            ],
+            chemistry12: [
+                "Solid State",
+                "Solutions",
+                "Electrochemistry",
+                "Chemical Kinetics",
+                "Surface Chemistry",
+                "General Principles & Processes of Isolation of Elements",
+                "d-Block Elements & Coordination Compounds",
+                "Halogens",
+                "Alcohols, Phenols & Ethers",
+                "Aldehydes, Ketones & Carboxylic Acids",
+                "Organic Compounds Containing Nitrogen",
+                "Biomolecules",
+                "Polymers",
+                "Chemistry in Everyday Life"
+            ],
+            maths11: [
+                "Sets",
+                "Relations & Functions",
+                "Trigonometric Functions",
+                "Principle of Mathematical Induction",
+                "Complex Numbers & Quadratic Equations",
+                "Linear Inequalities",
+                "Permutations & Combinations",
+                "Binomial Theorem",
+                "Sequences & Series",
+                "Straight Lines",
+                "Conic Sections",
+                "Introduction to 3D Geometry",
+                "Limits & Derivatives",
+                "Mathematical Reasoning",
+                "Statistics",
+                "Probability"
+            ],
+            maths12: [
+                "Relations & Functions",
+                "Inverse Trigonometric Functions",
+                "Matrices",
+                "Determinants",
+                "Continuity & Differentiability",
+                "Application of Derivatives",
+                "Integrals",
+                "Application of Integrals",
+                "Differential Equations",
+                "Vector Algebra",
+                "3D Geometry",
+                "Linear Programming",
+                "Probability",
+                "Calculus Applications",
+                "Complex Numbers (Advanced)",
+                "Advanced Topics"
+            ]
+        };
+
+        // Load progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('jeeProgress');
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            const progress = {};
+            document.querySelectorAll('.checkbox').forEach(checkbox => {
+                const id = checkbox.id;
+                progress[id] = checkbox.classList.contains('checked');
+            });
+            localStorage.setItem('jeeProgress', JSON.stringify(progress));
+            alert('✅ Progress saved successfully!');
+        }
+
+        // Create checkbox element
+        function createCheckbox(id) {
+            const div = document.createElement('div');
+            div.className = 'checkbox';
+            div.id = id;
+            div.textContent = '☐';
+            div.onclick = () => toggleCheckbox(div);
+            return div;
+        }
+
+        // Toggle checkbox
+        function toggleCheckbox(element) {
+            element.classList.toggle('checked');
+            element.textContent = element.classList.contains('checked') ? '✓' : '☐';
+            updateStats();
+            saveProgress();
+        }
+
+        // Create table row
+        function createRow(subject, className, index, chapterName) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="chapter-name">${index + 1}. ${chapterName}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><input type="text" class="notes-field" placeholder="Add notes..."></td>
+            `;
+
+            // Add checkboxes
+            const checkboxCells = row.querySelectorAll('td');
+            for (let i = 1; i < 5; i++) {
+                const id = `${subject}-${className}-${index}-${i - 1}`;
+                checkboxCells[i].appendChild(createCheckbox(id));
+            }
+
+            return row;
+        }
+
+        // Populate tables
+        function populateTables() {
+            const subjects = {
+                physics11: 'physics11',
+                physics12: 'physics12',
+                chemistry11: 'chemistry11',
+                chemistry12: 'chemistry12',
+                maths11: 'maths11',
+                maths12: 'maths12'
+            };
+
+            for (const [key, id] of Object.entries(subjects)) {
+                const tbody = document.getElementById(id);
+                const [subject, className] = key.split(/(?=\d)/);
+                
+                chapters[key].forEach((chapter, index) => {
+                    tbody.appendChild(createRow(subject, className, index, chapter));
+                });
+            }
+
+            // Load saved progress
+            const progress = loadProgress();
+            document.querySelectorAll('.checkbox').forEach(checkbox => {
+                if (progress[checkbox.id]) {
+                    checkbox.classList.add('checked');
+                    checkbox.textContent = '✓';
+                }
+            });
+
+            updateStats();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const progress = loadProgress();
+            const total = Object.keys(progress).length || Object.values(chapters).reduce((sum, arr) => sum + arr.length * 4, 0);
+            const completed = Object.values(progress).filter(Boolean).length;
+            
+            const statsDiv = document.getElementById('stats');
+            statsDiv.innerHTML = `
+                <div class="stat-box">
+                    <div class="stat-number">${completed}</div>
+                    <div class="stat-label">Tasks Completed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">${total}</div>
+                    <div class="stat-label">Total Tasks</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">${total > 0 ? Math.round((completed / total) * 100) : 0}%</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+            `;
+        }
+
+        // Initialize
+        window.onload = () => {
+            populateTables();
+        };
+    </script>
+</body>
+</html>
